@@ -6,6 +6,7 @@
     <title>Lead Information</title>
     <!-- FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.1/css/pikaday.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -39,6 +40,9 @@
             margin-top: 5px;
             border: 1px solid #ddd;
             border-radius: 5px;
+        }
+        .field textarea {
+            height: 80px;
         }
         .status-container {
             display: flex;
@@ -124,6 +128,10 @@
             border: none;
             cursor: pointer;
         }
+        #generated-link {
+            width: calc(100% - 60px); /* Make the input field bigger */
+            padding: 15px;
+        }
     </style>
 </head>
 <body>
@@ -139,7 +147,13 @@
         <label>City</label>
         <input type="text" value="Agadir" disabled>
     </div>
-    
+
+    <!-- Appointment field, moved after City -->
+    <div class="field">
+        <label>Appointment</label>
+        <input type="text" id="appointment" readonly placeholder="Choose Date & Time" />
+    </div>
+
     <!-- Comments field -->
     <div class="field">
         <label>Comments</label>
@@ -154,11 +168,6 @@
             <option value="Essai guidé effectué">Essai guidé effectué</option>
             <option value="Completed">Completed</option>
         </select>
-    </div>
-
-    <div class="field">
-        <label>Appointment</label>
-        <input type="text" value="28/12/2024 at 15:10" id="appointment" />
     </div>
 
     <!-- Save Status button -->
@@ -178,6 +187,8 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.1/pikaday.min.js"></script>
+
 <script>
     // Accessing elements
     const statusDropdown = document.getElementById("status-dropdown");
@@ -188,6 +199,9 @@
     const copyLinkButton = document.getElementById("copy-link-btn");
     const shareLinkButton = document.getElementById("share-link-btn");
     const saveStatusField = document.getElementById("save-status-field");
+
+    // Appointment field
+    const appointmentInput = document.getElementById("appointment");
 
     // Initially hide the "Save Status" and "Generate Link" buttons
     saveStatusField.classList.add("hidden");
@@ -242,6 +256,14 @@
         } else {
             alert('Share functionality not available in this browser');
         }
+    });
+
+    // Calendar setup for Appointment field with 30 min delay
+    const picker = new Pikaday({
+        field: appointmentInput,
+        minDate: new Date(Date.now() + 30 * 60000), // Start from the next 30 minutes
+        showTime: true,
+        format: 'DD/MM/YYYY hh:mm A',
     });
 </script>
 
