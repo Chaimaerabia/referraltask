@@ -81,25 +81,6 @@
             background-color: #28a745;
             color: white;
         }
-        .mobile-icons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .mobile-icons button {
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #ddd;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .mobile-icons button i {
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -146,12 +127,6 @@
         <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
     </div>
 
-    <!-- Mobile action icons (Phone & Share) hidden initially -->
-    <div class="mobile-icons hidden" id="mobile-icons">
-        <button id="call-icon"><i class="fas fa-phone-alt"></i></button>
-        <button id="share-icon"><i class="fas fa-share-alt"></i></button>
-    </div>
-
 </div>
 
 <script>
@@ -161,13 +136,11 @@
     const generateLinkButton = document.getElementById("generate-link-btn");
     const generateLinkField = document.getElementById("generate-link-field");
     const generatedLinkInput = document.getElementById("generated-link");
-    const mobileIcons = document.getElementById("mobile-icons");
     const saveStatusField = document.getElementById("save-status-field");
 
     // Initially hide the "Save Status" and "Generate Link" buttons
     saveStatusField.classList.add("hidden");
     generateLinkField.classList.add("hidden");
-    mobileIcons.classList.add("hidden");
 
     // When "Essai guidé effectué" is selected, show the Save Status button
     statusDropdown.addEventListener("change", () => {
@@ -176,7 +149,6 @@
         } else {
             saveStatusField.classList.add("hidden");
             generateLinkField.classList.add("hidden");
-            mobileIcons.classList.add("hidden");
         }
     });
 
@@ -194,18 +166,6 @@
         const phoneNumber = "1234567890"; // Fake phone number for simulation
         const fullLink = `${baseLink}&source=${phoneNumber}`;
         generatedLinkInput.value = fullLink;
-
-        // Show mobile icons (Phone & Share) after generating the link
-        mobileIcons.classList.remove("hidden");
-    });
-
-    // Handle icon actions
-    document.getElementById("call-icon").addEventListener("click", () => {
-        alert('Calling...');
-    });
-
-    document.getElementById("share-icon").addEventListener("click", () => {
-        alert('Sharing...');
     });
 </script>
 
