@@ -3,161 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lead Information</title>
+<title>Simulation</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f9f9f9;
-    }
-    .container {
-        max-width: 500px;
-        margin: 0 auto;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .field {
-        margin-bottom: 15px;
-    }
-    .field label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    .field input, .field select, .field button, .field textarea {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-    .hidden {
-        display: none;
-    }
-    .contact-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-    .contact-buttons button {
-        width: 48%;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    .contact-buttons button.call {
-        background-color: #007bff;
-        color: white;
-    }
-    .contact-buttons button.share {
-        background-color: #e0e0e0;
-        color: black;
-    }
-    .status-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .status-container select {
-        width: 70%;
-    }
+       body {
+           font-family: Arial, sans-serif;
+           margin: 20px;
+           background-color: #f9f9f9;
+       }
+       .container {
+           max-width: 400px;
+           margin: 0 auto;
+           background: white;
+           padding: 20px;
+           border-radius: 10px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+       .field {
+           margin-bottom: 15px;
+       }
+       .field label {
+           display: block;
+           font-weight: bold;
+           margin-bottom: 5px;
+       }
+       .field input, .field select, .field button, .field textarea {
+           width: 100%;
+           padding: 10px;
+           margin-top: 5px;
+           border: 1px solid #ddd;
+           border-radius: 5px;
+       }
+       .hidden {
+           display: none;
+       }
+       .contact-buttons {
+           display: flex;
+           justify-content: space-between;
+           margin-top: 20px;
+       }
+       .contact-buttons button {
+           width: 48%;
+           padding: 10px;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           font-size: 16px;
+       }
+       .contact-buttons button.call {
+           background-color: #007bff;
+           color: white;
+       }
+       .contact-buttons button.share {
+           background-color: #e0e0e0;
+           color: black;
+       }
 </style>
 </head>
 <body>
-
 <div class="container">
-    <h2>Lead Information</h2>
-    <div class="field">
-        <label>Name</label>
-        <input type="text" value="Yassine" disabled>
-    </div>
-    <div class="field">
-        <label>City</label>
-        <input type="text" value="Agadir" disabled>
-    </div>
-    
-    <!-- Status field with emphasis -->
-    <div class="field status-container">
-        <label>Status</label>
-        <select id="status-dropdown">
-            <option value="Pending">Pending</option>
-            <option value="Essai guidé effectué">Essai guidé effectué</option>
-            <option value="Completed">Completed</option>
-        </select>
-    </div>
-
-    <div class="field">
-        <label>Appointment</label>
-        <input type="text" value="28/12/2024 at 15:10" id="appointment" />
-    </div>
-    <div class="field">
-        <label>Comments</label>
-        <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
-    </div>
-
-    <div class="field hidden" id="generate-link-field">
-        <button id="generate-link-btn">Generate Link</button>
-        <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
-        <button id="copy-link-btn" class="hidden">Copy Link</button>
-    </div>
-
-    <!-- Contact buttons appear only after clicking "Contact" -->
-    <button id="contact-btn">Contact</button>
-    <div class="contact-buttons hidden" id="contact-buttons">
-        <button class="call">Appeler</button>
-        <button class="share">Envoyer</button>
-    </div>
+<h2>Lead Information</h2>
+<div class="field">
+<label>Name</label>
+<input type="text" value="Yassine" disabled>
 </div>
-
+<div class="field">
+<label>City</label>
+<input type="text" value="Agadir" disabled>
+</div>
+<div class="field">
+<label>Status</label>
+<select id="status-dropdown">
+<option value="Pending">Pending</option>
+<option value="Essai guidé effectué">Essai guidé effectué</option>
+<option value="Completed">Completed</option>
+</select>
+</div>
+<div class="field">
+<label>Appointment</label>
+<input type="text" value="28/12/2024 at 15:10" disabled>
+</div>
+<div class="field">
+<label>Comments</label>
+<textarea rows="3" disabled>Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
+</div>
+<div class="field hidden" id="generate-link-field">
+<button id="generate-link-btn">Generate Link</button>
+<p id="generated-link" style="margin-top: 10px; color: green;"></p>
+</div>
+<div class="contact-buttons">
+<button class="call">Appeler</button>
+<button class="share">Envoyer</button>
+</div>
+</div>
 <script>
-    // Accessing elements
-    const statusDropdown = document.getElementById("status-dropdown");
-    const generateLinkField = document.getElementById("generate-link-field");
-    const generateLinkButton = document.getElementById("generate-link-btn");
-    const generatedLinkInput = document.getElementById("generated-link");
-    const copyLinkButton = document.getElementById("copy-link-btn");
-    const contactBtn = document.getElementById("contact-btn");
-    const contactButtons = document.getElementById("contact-buttons");
-
-    // Show/hide "Contact" buttons
-    contactBtn.addEventListener("click", () => {
-        contactButtons.classList.remove("hidden");
-        contactBtn.classList.add("hidden");
-    });
-
-    // Update the status
-    statusDropdown.addEventListener("change", () => {
-        if (statusDropdown.value === "Essai guidé effectué") {
-            generateLinkField.classList.remove("hidden");
-        } else {
-            generateLinkField.classList.add("hidden");
-        }
-    });
-
-    // Generate the link
-    generateLinkButton.addEventListener("click", () => {
-        const baseLink = "https://iqostest.com/?agence=PMIMA";
-        const phoneNumber = "1234567890"; // Fake phone number for simulation
-        const fullLink = `${baseLink}&source=${phoneNumber}`;
-        generatedLinkInput.value = fullLink;
-        copyLinkButton.classList.remove("hidden");
-    });
-
-    // Copy the generated link to clipboard
-    copyLinkButton.addEventListener("click", () => {
-        generatedLinkInput.select();
-        document.execCommand("copy");
-        alert("Link copied to clipboard!");
-    });
+       // Accessing elements
+       const statusDropdown = document.getElementById("status-dropdown");
+       const generateLinkField = document.getElementById("generate-link-field");
+       const generateLinkButton = document.getElementById("generate-link-btn");
+       const generatedLinkParagraph = document.getElementById("generated-link");
+       // Listening to dropdown changes
+       statusDropdown.addEventListener("change", () => {
+           if (statusDropdown.value === "Essai guidé effectué") {
+               generateLinkField.classList.remove("hidden");
+           } else {
+               generateLinkField.classList.add("hidden");
+               generatedLinkParagraph.textContent = "";
+           }
+       });
+       // Generate link functionality
+       generateLinkButton.addEventListener("click", () => {
+           const baseLink = "https://iqostest.com/?agence=PMIMA";
+           const phoneNumber = "1234567890"; // Fake phone number for simulation
+           const fullLink = ${baseLink}&source=${phoneNumber};
+           generatedLinkParagraph.textContent = Generated Link: ${fullLink};
+       });
 </script>
-
 </body>
-</html>
+</html> 
