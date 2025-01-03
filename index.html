@@ -1,125 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Status Update Form</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead Information</title>
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
     }
-    .form-group {
-      margin-bottom: 15px;
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    label {
-      display: block;
-      margin-bottom: 5px;
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
     }
-    select, input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
+    .field {
+        margin-bottom: 15px;
+    }
+    .field label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .field input, .field select, .field button, .field textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
     }
     .hidden {
-      display: none;
+        display: none;
     }
-  </style>
+    .contact-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    /* Smaller buttons with icons */
+    .contact-buttons button {
+        width: 48%;
+        padding: 10px;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .contact-buttons button.call {
+        background-color: #007bff;
+        color: white;
+    }
+    .contact-buttons button.share {
+        background-color: #e0e0e0;
+        color: black;
+    }
+    .contact-buttons button i {
+        margin-right: 5px; /* Space between icon and text */
+    }
+    .status-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .status-container select {
+        width: 70%;
+    }
+</style>
 </head>
 <body>
-  <form id="statusForm">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" value="Yassine" readonly>
+
+<div class="container">
+    <h2>Lead Information</h2>
+    <div class="field">
+        <label>Name</label>
+        <input type="text" value="Yassine" disabled>
+    </div>
+    <div class="field">
+        <label>City</label>
+        <input type="text" value="Agadir" disabled>
+    </div>
+    
+    <!-- Status field with emphasis -->
+    <div class="field status-container">
+        <label>Status</label>
+        <select id="status-dropdown">
+            <option value="Pending">Pending</option>
+            <option value="Essai guidé effectué">Essai guidé effectué</option>
+            <option value="Completed">Completed</option>
+        </select>
     </div>
 
-    <div class="form-group">
-      <label for="city">City:</label>
-      <input type="text" id="city" name="city" value="Agadir" readonly>
+    <div class="field">
+        <label>Appointment</label>
+        <input type="text" value="28/12/2024 at 15:10" id="appointment" />
+    </div>
+    <div class="field">
+        <label>Comments</label>
+        <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
     </div>
 
-    <div class="form-group">
-      <label for="status">Status:</label>
-      <select id="status" name="status">
-        <option value="nouveau">Nouveau</option>
-        <option value="rdv_confirmé">RDV confirmé</option>
-        <option value="essai_guidé_effectué">Essai guidé effectué</option>
-        <option value="autres">Autres</option>
-      </select>
+    <div class="field hidden" id="generate-link-field">
+        <button id="generate-link-btn">Generate Link</button>
+        <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
+        <button id="copy-link-btn" class="hidden">Copy Link</button>
     </div>
 
-    <div class="form-group">
-      <label for="appointment">Appointment:</label>
-      <input type="datetime-local" id="appointment" name="appointment">
+    <!-- Contact buttons appear only after clicking "Contact" -->
+    <button id="contact-btn">Contact</button>
+    <div class="contact-buttons hidden" id="contact-buttons">
+        <!-- Use icons for smaller buttons -->
+        <button class="call"><i class="fas fa-phone-alt"></i> Appeler</button>
+        <button class="share"><i class="fas fa-share-alt"></i> Envoyer</button>
     </div>
+</div>
 
-    <div class="form-group">
-      <label for="comment">Comment:</label>
-      <textarea id="comment" name="comment" rows="3"></textarea>
-    </div>
+<script>
+    // Accessing elements
+    const statusDropdown = document.getElementById("status-dropdown");
+    const generateLinkField = document.getElementById("generate-link-field");
+    const generateLinkButton = document.getElementById("generate-link-btn");
+    const generatedLinkInput = document.getElementById("generated-link");
+    const copyLinkButton = document.getElementById("copy-link-btn");
+    const contactBtn = document.getElementById("contact-btn");
+    const contactButtons = document.getElementById("contact-buttons");
 
-    <div class="form-group">
-      <button type="button" id="contactButton">Contact</button>
-      <div id="contactOptions" class="hidden">
-        <button type="button">Appeler</button>
-        <button type="button">Envoyer</button>
-      </div>
-    </div>
-
-    <div class="form-group hidden" id="linkContainer">
-      <button type="button" id="generateLinkButton">Generate Link</button>
-      <input type="text" id="generatedLink" readonly>
-      <button type="button" id="copyLinkButton">Copy Link</button>
-      <button type="button" id="shareLinkButton">Share Link</button>
-    </div>
-  </form>
-
-  <script>
-    document.getElementById('status').addEventListener('change', function () {
-      const selectedStatus = this.value;
-      const linkContainer = document.getElementById('linkContainer');
-      if (selectedStatus === 'essai_guidé_effectué') {
-        linkContainer.classList.remove('hidden');
-      } else {
-        linkContainer.classList.add('hidden');
-      }
+    // Show/hide "Contact" buttons
+    contactBtn.addEventListener("click", () => {
+        contactButtons.classList.remove("hidden");
+        contactBtn.classList.add("hidden");
     });
 
-    document.getElementById('contactButton').addEventListener('click', function () {
-      const contactOptions = document.getElementById('contactOptions');
-      contactOptions.classList.toggle('hidden');
+    // Update the status
+    statusDropdown.addEventListener("change", () => {
+        if (statusDropdown.value === "Essai guidé effectué") {
+            generateLinkField.classList.remove("hidden");
+        } else {
+            generateLinkField.classList.add("hidden");
+        }
     });
 
-    document.getElementById('generateLinkButton').addEventListener('click', function () {
-      const link = 'https://iqostest.com/?agence=PMIMA&source=0626063022';
-      const linkInput = document.getElementById('generatedLink');
-      linkInput.value = link;
-      alert('Link generated: ' + link);
+    // Generate the link
+    generateLinkButton.addEventListener("click", () => {
+        const baseLink = "https://iqostest.com/?agence=PMIMA";
+        const phoneNumber = "1234567890"; // Fake phone number for simulation
+        const fullLink = `${baseLink}&source=${phoneNumber}`;
+        generatedLinkInput.value = fullLink;
+        copyLinkButton.classList.remove("hidden");
+          alert("Link copied to clipboard!");
     });
+</script>
 
-    document.getElementById('copyLinkButton').addEventListener('click', function () {
-      const linkInput = document.getElementById('generatedLink');
-      linkInput.select();
-      document.execCommand('copy');
-      alert('Link copied to clipboard!');
-    });
-
-    document.getElementById('shareLinkButton').addEventListener('click', function () {
-      const link = document.getElementById('generatedLink').value;
-      if (navigator.share) {
-        navigator.share({
-          title: 'Generated Link',
-          text: 'Here is the link:',
-          url: link
-        }).then(() => {
-          alert('Link shared successfully!');
-        }).catch(err => {
-          console.error('Error sharing:', err);
-        });
-      } else {
-        alert('Sharing is not supported in this browser.');
-      }
-    });
-  </script>
 </body>
 </html>
