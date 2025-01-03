@@ -11,8 +11,8 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #00D1D2; /* Turquoise background */
-            color: #f5f5f5; /* Soft white text */
+            background-color: #f5f5f5; /* Light background color for the page */
+            color: #333; /* Standard text color */
         }
         .container {
             max-width: 500px;
@@ -41,11 +41,13 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        /* Status block with turquoise background */
         .status-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #f0f0f0;
+            background-color: #00D1D2; /* Turquoise background */
+            color: #f5f5f5; /* Soft white text */
             padding: 15px;
             border-radius: 10px;
             font-size: 18px;
@@ -116,7 +118,7 @@
         <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
     </div>
 
-    <!-- Status field with emphasis, moved after Comments -->
+    <!-- Status field with turquoise background, moved after Comments -->
     <div class="field status-container">
         <label>Status</label>
         <select id="status-dropdown">
