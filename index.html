@@ -240,6 +240,9 @@
         // Show status saved confirmation message
         statusSavedMessage.classList.remove("hidden");
 
+        // Hide the Save Status button
+        saveStatusButton.classList.add("hidden");
+
         // Check if the selected status is "Acheté" or "Essai guidé effectué"
         if (selectedStatus === "Acheté" || selectedStatus === "Essai guidé effectué") {
             generateLinkField.classList.remove("hidden"); // Show the Generate Link field
@@ -287,9 +290,8 @@
     flatpickr("#appointment", {
         enableTime: true,
         minDate: new Date().fp_incr(30), // Start from the next 30 minutes
-        dateFormat: "d-m-Y H:i",
+        dateFormat: "Y-m-d H:i",
     });
 </script>
-
 </body>
 </html>
