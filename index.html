@@ -1,89 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lead Information</title>
-<!-- Add Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f9f9f9;
-    }
-    .container {
-        max-width: 500px;
-        margin: 0 auto;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .field {
-        margin-bottom: 15px;
-    }
-    .field label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    .field input, .field select, .field button, .field textarea {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-    .hidden {
-        display: none;
-    }
-    .contact-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-    /* Smaller buttons with icons */
-    .contact-buttons button {
-        width: 48%;
-        padding: 10px;
-        font-size: 18px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .contact-buttons button.call {
-        background-color: #007bff;
-        color: white;
-    }
-    .contact-buttons button.share {
-        background-color: #e0e0e0;
-        color: black;
-    }
-    .contact-buttons button i {
-        margin-right: 5px; /* Space between icon and text */
-    }
-    .status-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .status-container select {
-        width: 70%;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .field input, .field select, .field button, .field textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .status-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .status-container select {
+            width: 70%;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .status-container option {
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+        .contact-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .contact-buttons button {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .contact-buttons button.call, .contact-buttons button.share {
+            width: 30%;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .contact-buttons button.call {
+            background-color: #007bff;
+            color: white;
+        }
+        .contact-buttons button.share {
+            background-color: #28a745;
+            color: white;
+        }
+        .action-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .action-btns button {
+            width: 48%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .action-btns button.copy {
+            background-color: #007bff;
+            color: white;
+        }
+        .action-btns button.share {
+            background-color: #28a745;
+            color: white;
+        }
+        .mobile-icons button {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .mobile-icons button i {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Lead Information</h2>
+    
     <div class="field">
         <label>Name</label>
         <input type="text" value="Yassine" disabled>
@@ -115,16 +156,18 @@
     <div class="field hidden" id="generate-link-field">
         <button id="generate-link-btn">Generate Link</button>
         <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
-        <button id="copy-link-btn" class="hidden">Copy Link</button>
     </div>
 
-    <!-- Contact buttons appear only after clicking "Contact" -->
-    <button id="contact-btn">Contact</button>
-    <div class="contact-buttons hidden" id="contact-buttons">
-        <!-- Use icons for smaller buttons -->
-        <button class="call"><i class="fas fa-phone-alt"></i> Appeler</button>
-        <button class="share"><i class="fas fa-share-alt"></i> Envoyer</button>
+    <div class="mobile-icons hidden" id="mobile-icons">
+        <button id="call-icon"><i class="fas fa-phone-alt"></i></button>
+        <button id="share-icon"><i class="fas fa-share-alt"></i></button>
     </div>
+
+    <div class="action-btns hidden" id="action-buttons">
+        <button id="copy-link-btn" class="copy">Copy Link</button>
+        <button id="share-link-btn" class="share">Share Link</button>
+    </div>
+
 </div>
 
 <script>
@@ -133,17 +176,11 @@
     const generateLinkField = document.getElementById("generate-link-field");
     const generateLinkButton = document.getElementById("generate-link-btn");
     const generatedLinkInput = document.getElementById("generated-link");
-    const copyLinkButton = document.getElementById("copy-link-btn");
-    const contactBtn = document.getElementById("contact-btn");
-    const contactButtons = document.getElementById("contact-buttons");
+    const callIcon = document.getElementById("call-icon");
+    const shareIcon = document.getElementById("share-icon");
+    const actionButtons = document.getElementById("action-buttons");
 
-    // Show/hide "Contact" buttons
-    contactBtn.addEventListener("click", () => {
-        contactButtons.classList.remove("hidden");
-        contactBtn.classList.add("hidden");
-    });
-
-    // Update the status
+    // Show/hide action buttons
     statusDropdown.addEventListener("change", () => {
         if (statusDropdown.value === "Essai guidé effectué") {
             generateLinkField.classList.remove("hidden");
@@ -158,8 +195,37 @@
         const phoneNumber = "1234567890"; // Fake phone number for simulation
         const fullLink = `${baseLink}&source=${phoneNumber}`;
         generatedLinkInput.value = fullLink;
-        copyLinkButton.classList.remove("hidden");
-          alert("Link copied to clipboard!");
+        actionButtons.classList.remove("hidden");
+    });
+
+    // Copy the generated link to clipboard
+    document.getElementById("copy-link-btn").addEventListener("click", () => {
+        generatedLinkInput.select();
+        document.execCommand("copy");
+        alert("Link copied to clipboard!");
+    });
+
+    // Share the generated link
+    document.getElementById("share-link-btn").addEventListener("click", () => {
+        const text = `Check out this link: ${generatedLinkInput.value}`;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Lead Information',
+                text: text,
+                url: generatedLinkInput.value,
+            }).catch(error => console.log('Error sharing', error));
+        } else {
+            alert('Share functionality not available in this browser');
+        }
+    });
+
+    // Handle icon actions
+    callIcon.addEventListener("click", () => {
+        alert('Calling...');
+    });
+
+    shareIcon.addEventListener("click", () => {
+        alert('Sharing...');
     });
 </script>
 
