@@ -263,6 +263,9 @@
         // Show Copy & Share buttons
         copyLinkButton.classList.remove("hidden");
         shareLinkButton.classList.remove("hidden");
+
+        // Hide the Text and Call buttons after generating the link
+        document.querySelector('.contact-buttons').classList.add('hidden');
     });
 
     // Copy the generated link to clipboard
@@ -289,9 +292,10 @@
     // Calendar setup for Appointment field with 30 min delay
     flatpickr("#appointment", {
         enableTime: true,
-        minDate: new Date().fp_incr(30), // Start from the next 30 minutes
+        minDate: new Date().fp_incr(30), // 30 minutes from now
         dateFormat: "Y-m-d H:i",
     });
 </script>
+
 </body>
 </html>
