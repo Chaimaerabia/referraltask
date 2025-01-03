@@ -161,16 +161,23 @@
         <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
     </div>
 
+    <div class="field hidden" id="save-status-field">
+        <button id="save-status-btn">Save Status</button>
+    </div>
+
+    <!-- Generate Link button, initially hidden -->
     <div class="field hidden" id="generate-link-field">
-        <button id="generate-link-btn">Generate Link</button>
+        <button id="generate-link-btn" disabled>Generate Link</button>
         <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
     </div>
 
+    <!-- Action buttons (Copy & Share) are hidden initially -->
     <div class="action-btns hidden" id="action-buttons">
         <button id="copy-link-btn" class="copy">Copy Link</button>
         <button id="share-link-btn" class="share">Share Link</button>
     </div>
 
+    <!-- Mobile action icons (Phone & Share) hidden initially -->
     <div class="mobile-icons hidden" id="mobile-icons">
         <button id="call-icon"><i class="fas fa-phone-alt"></i></button>
         <button id="share-icon"><i class="fas fa-share-alt"></i></button>
@@ -181,20 +188,34 @@
 <script>
     // Accessing elements
     const statusDropdown = document.getElementById("status-dropdown");
-    const generateLinkField = document.getElementById("generate-link-field");
+    const saveStatusButton = document.getElementById("save-status-btn");
     const generateLinkButton = document.getElementById("generate-link-btn");
+    const generateLinkField = document.getElementById("generate-link-field");
     const generatedLinkInput = document.getElementById("generated-link");
-    const callIcon = document.getElementById("call-icon");
-    const shareIcon = document.getElementById("share-icon");
     const actionButtons = document.getElementById("action-buttons");
+    const mobileIcons = document.getElementById("mobile-icons");
 
-    // Show/hide action buttons
+    // Initially hide the "Save Status" and "Generate Link" buttons
+    saveStatusButton.classList.add("hidden");
+    generateLinkField.classList.add("hidden");
+
+    // When "Essai guidé effectué" is selected, show the Save Status button
     statusDropdown.addEventListener("change", () => {
         if (statusDropdown.value === "Essai guidé effectué") {
-            generateLinkField.classList.remove("hidden");
+            saveStatusButton.classList.remove("hidden");
         } else {
+            saveStatusButton.classList.add("hidden");
             generateLinkField.classList.add("hidden");
+            actionButtons.classList.add("hidden");
+            mobileIcons.classList.add("hidden");
         }
+    });
+
+    // When the "Save Status" button is clicked, enable the Generate Link button
+    saveStatusButton.addEventListener("click", () => {
+        saveStatusButton.disabled = true;
+        statusDropdown.disabled = true; // Disable dropdown to prevent further changes
+        generateLinkField.classList.remove("hidden");
     });
 
     // Generate the link
@@ -203,8 +224,10 @@
         const phoneNumber = "1234567890"; // Fake phone number for simulation
         const fullLink = `${baseLink}&source=${phoneNumber}`;
         generatedLinkInput.value = fullLink;
+
+        // Show action buttons after generating the link
         actionButtons.classList.remove("hidden");
-        document.getElementById("mobile-icons").classList.remove("hidden");
+        mobileIcons.classList.remove("hidden");
     });
 
     // Copy the generated link to clipboard
@@ -229,11 +252,11 @@
     });
 
     // Handle icon actions
-    callIcon.addEventListener("click", () => {
+    document.getElementById("call-icon").addEventListener("click", () => {
         alert('Calling...');
     });
 
-    shareIcon.addEventListener("click", () => {
+    document.getElementById("share-icon").addEventListener("click", () => {
         alert('Sharing...');
     });
 </script>
