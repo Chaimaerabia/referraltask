@@ -62,32 +62,6 @@
         .hidden {
             display: none;
         }
-        .contact-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .contact-buttons button {
-            width: 48%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .contact-buttons button.call, .contact-buttons button.share {
-            width: 30%;
-            padding: 10px;
-            font-size: 18px;
-        }
-        .contact-buttons button.call {
-            background-color: #007bff;
-            color: white;
-        }
-        .contact-buttons button.share {
-            background-color: #28a745;
-            color: white;
-        }
         .action-btns {
             display: flex;
             justify-content: space-between;
@@ -172,12 +146,6 @@
         <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
     </div>
 
-    <!-- Action buttons (Copy & Share) are hidden initially -->
-    <div class="action-btns hidden" id="action-buttons">
-        <button id="copy-link-btn" class="copy">Copy Link</button>
-        <button id="share-link-btn" class="share">Share Link</button>
-    </div>
-
     <!-- Mobile action icons (Phone & Share) hidden initially -->
     <div class="mobile-icons hidden" id="mobile-icons">
         <button id="call-icon"><i class="fas fa-phone-alt"></i></button>
@@ -193,14 +161,12 @@
     const generateLinkButton = document.getElementById("generate-link-btn");
     const generateLinkField = document.getElementById("generate-link-field");
     const generatedLinkInput = document.getElementById("generated-link");
-    const actionButtons = document.getElementById("action-buttons");
     const mobileIcons = document.getElementById("mobile-icons");
     const saveStatusField = document.getElementById("save-status-field");
 
     // Initially hide the "Save Status" and "Generate Link" buttons
     saveStatusField.classList.add("hidden");
     generateLinkField.classList.add("hidden");
-    actionButtons.classList.add("hidden"); // Hide the action buttons initially
     mobileIcons.classList.add("hidden");
 
     // When "Essai guidé effectué" is selected, show the Save Status button
@@ -210,7 +176,6 @@
         } else {
             saveStatusField.classList.add("hidden");
             generateLinkField.classList.add("hidden");
-            actionButtons.classList.add("hidden");
             mobileIcons.classList.add("hidden");
         }
     });
@@ -230,30 +195,8 @@
         const fullLink = `${baseLink}&source=${phoneNumber}`;
         generatedLinkInput.value = fullLink;
 
-        // Show action buttons (Copy & Share) after generating the link
-        actionButtons.classList.remove("hidden");
+        // Show mobile icons (Phone & Share) after generating the link
         mobileIcons.classList.remove("hidden");
-    });
-
-    // Copy the generated link to clipboard
-    document.getElementById("copy-link-btn").addEventListener("click", () => {
-        generatedLinkInput.select();
-        document.execCommand("copy");
-        alert("Link copied to clipboard!");
-    });
-
-    // Share the generated link
-    document.getElementById("share-link-btn").addEventListener("click", () => {
-        const text = `Check out this link: ${generatedLinkInput.value}`;
-        if (navigator.share) {
-            navigator.share({
-                title: 'Lead Information',
-                text: text,
-                url: generatedLinkInput.value,
-            }).catch(error => console.log('Error sharing', error));
-        } else {
-            alert('Share functionality not available in this browser');
-        }
     });
 
     // Handle icon actions
