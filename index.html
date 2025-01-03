@@ -71,55 +71,14 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-            padding: 10px;
         }
         .contact-buttons button {
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
             width: 48%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .contact-buttons .call-btn {
-            background-color: #007bff; /* Call button in Blue */
-        }
-        .contact-buttons .text-btn {
-            background-color: #28a745; /* Text button in Green */
-        }
-        .contact-buttons button i {
-            margin-right: 8px; /* Adds space between the icon and the text */
-        }
-        .contact-buttons button:hover {
-            opacity: 0.85; /* Slight hover effect */
-            transform: scale(1.05); /* Slight zoom effect */
-        }
-        .contact-buttons button:active {
-            transform: scale(1); /* Prevents zooming when clicked */
-        }
-        .contact-buttons button:disabled {
-            background-color: #dcdcdc; /* Disabled button color */
-            cursor: not-allowed;
-        }
-        .link-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .link-container button {
-            background-color: transparent;
+            padding: 10px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-        }
-        #generated-link {
-            width: calc(100% - 60px); /* Make the input field bigger */
-            padding: 15px;
+            font-size: 16px;
         }
         .action-btns {
             display: flex;
@@ -159,6 +118,20 @@
         .mobile-icons button i {
             color: white;
         }
+        .link-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .link-container button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        #generated-link {
+            width: calc(100% - 60px); /* Make the input field bigger */
+            padding: 15px;
+        }
     </style>
 </head>
 <body>
@@ -191,9 +164,14 @@
     <div class="field status-container">
         <label>Status</label>
         <select id="status-dropdown">
-            <option value="Pending">Pending</option>
+            <option value="Pas interessé">Pas intéressé</option>
+            <option value="Injoignable">Injoignable</option>
+            <option value="Autres">Autres</option>
+            <option value="Rappeler plus tard">Rappeler plus tard</option>
+            <option value="Rendez-vous confirmé">Rendez-vous confirmé</option>
+            <option value="Acheté">Acheté</option>
             <option value="Essai guidé effectué">Essai guidé effectué</option>
-            <option value="Completed">Completed</option>
+            <option value="Nouveau">Nouveau</option>
         </select>
     </div>
 
@@ -212,14 +190,10 @@
         </div>
     </div>
 
-    <!-- Contact Buttons Section (Call and Text) -->
+    <!-- Contact Buttons -->
     <div class="contact-buttons">
-        <button class="call-btn" id="call-btn">
-            <i class="fas fa-phone-alt"></i> Call
-        </button>
-        <button class="text-btn" id="text-btn">
-            <i class="fas fa-comment-alt"></i> Text
-        </button>
+        <button class="call-btn"><i class="fas fa-phone-alt"></i> Call</button>
+        <button class="text-btn"><i class="fas fa-comment-alt"></i> Text</button>
     </div>
 
 </div>
@@ -244,13 +218,16 @@
     saveStatusField.classList.add("hidden");
     generateLinkField.classList.add("hidden");
 
-    // When "Essai guidé effectué" is selected, show the Save Status button
+    // When "Essai guidé effectué" or "Acheté" is selected, show the Save Status button and enable Generate Link button
     statusDropdown.addEventListener("change", () => {
-        if (statusDropdown.value === "Essai guidé effectué") {
+        if (statusDropdown.value === "Essai guidé effectué" || statusDropdown.value === "Acheté") {
             saveStatusField.classList.remove("hidden");
+            generateLinkField.classList.remove("hidden");
+            generateLinkButton.disabled = false;
         } else {
-            saveStatusField.classList.add("hidden");
+            saveStatusField.classList.remove("hidden");
             generateLinkField.classList.add("hidden");
+            generateLinkButton.disabled = true;
         }
     });
 
@@ -258,34 +235,46 @@
     saveStatusButton.addEventListener("click", () => {
         saveStatusButton.disabled = true;
         statusDropdown.disabled = true; // Disable dropdown to prevent further changes
-        generateLinkField.classList.remove("hidden");
-        generateLinkButton.disabled = false; // Enable the "Generate Link" button
     });
 
     // Generate the link
     generateLinkButton.addEventListener("click", () => {
-        const link = `https://example.com/lead?name=Yassine&status=${statusDropdown.value}&appointment=${appointmentInput.value}`;
-        generatedLinkInput.value = link;
+        const baseLink = "https://iqostest.com/?agence=PMIMA";
+        const phoneNumber = "1234567890"; // Fake phone number for simulation
+        const fullLink = `${baseLink}&source=${phoneNumber}`;
+        generatedLinkInput.value = fullLink;
+
+        // Show Copy & Share buttons
         copyLinkButton.classList.remove("hidden");
         shareLinkButton.classList.remove("hidden");
     });
 
-    // Copy the generated link to the clipboard
+    // Copy the generated link to clipboard
     copyLinkButton.addEventListener("click", () => {
         generatedLinkInput.select();
         document.execCommand("copy");
         alert("Link copied to clipboard!");
     });
 
-    // Share the generated link (example action)
+    // Share the generated link
     shareLinkButton.addEventListener("click", () => {
-        alert("Link shared!");
+        const text = `Check out this link: ${generatedLinkInput.value}`;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Lead Information',
+                text: text,
+                url: generatedLinkInput.value,
+            }).catch(error => console.log('Error sharing', error));
+        } else {
+            alert('Share functionality not available in this browser');
+        }
     });
 
-    // Initialize flatpickr for appointment field
+    // Calendar setup for Appointment field with 30 min delay
     flatpickr("#appointment", {
         enableTime: true,
-        dateFormat: "Y-m-d H:i",
+        minDate: new Date().fp_incr(30), // Start from the next 30 minutes
+        dateFormat: "d-m-Y H:i",
     });
 </script>
 
