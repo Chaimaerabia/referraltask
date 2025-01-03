@@ -1,273 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>URL Generator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f4f4f9;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    label, select, button {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      font-size: 1.1em;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    label {
-      font-weight: bold;
-    }
-    select, button {
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    button {
-      background-color: #007BFF;
-      color: #fff;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    #testCheckboxContainer {
-      display: none;
-      margin-top: 20px;
-      background-color: #ffebeb;
-      padding: 10px;
-      border-radius: 5px;
-    }
-    #testCheckbox {
-      margin-right: 10px;
-      accent-color: red;
-    }
-    #generatedLink {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #eef;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      word-wrap: break-word;
-    }
-    #copyButton {
-      margin-top: 10px;
-      background-color: #28a745;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group select {
+            appearance: none;
+            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23999" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>') no-repeat right 10px center;
+            background-size: 12px 12px;
+        }
+
+        .form-actions {
+            text-align: right;
+        }
+
+        .form-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .form-actions button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Add logo image -->
-    <div style="text-align: center;">
-      <img src="https://play-lh.googleusercontent.com/d7Ro00xbzx86tD8O32mK0Av-VdSUcMIQD3lZRKdtRqp9urWD-nTxk90LR70U_s2m_N4" alt="Logo" style="max-width: 200px; height: auto;">
+    <div class="form-container">
+        <form>
+            <div class="form-group">
+                <label for="field1">Field 1</label>
+                <input type="text" id="field1" placeholder="Enter value">
+            </div>
+
+            <div class="form-group">
+                <label for="dropdown1">Dropdown 1</label>
+                <select id="dropdown1">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="field2">Field 2</label>
+                <input type="text" id="field2" placeholder="Enter value">
+            </div>
+
+            <div class="form-group">
+                <label for="dropdown2">Dropdown 2</label>
+                <select id="dropdown2">
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
     </div>
-
-    <h1>Link Generator</h1>
-
-    <!-- Purpose Selection -->
-    <label for="purpose">Choose the purpose of your link:</label>
-    <select id="purpose">
-      <option value="">--Select Purpose--</option>
-      <option value="url">URL</option>
-      <option value="schedule">SCHEDULE</option>
-    </select>
-
-    <!-- Agency Selection -->
-    <label for="agency" style="display:none;">Choose an agency:</label>
-    <select id="agency" style="display:none;">
-      <option value="">--Select Agency--</option>
-    </select>
-
-    <!-- Lead Source Selection -->
-    <label for="leadSource" style="display:none;">Choose a lead source:</label>
-    <select id="leadSource" style="display:none;">
-      <option value="">--Select Lead Source--</option>
-    </select>
-
-    <!-- Test Checkbox -->
-    <label id="testCheckboxContainer" style="display:none;">
-      <input type="checkbox" id="testCheckbox"> TEST (check this box if you wish to use the link for testing purposes only)
-    </label>
-
-    <!-- Generate Button -->
-    <button id="generateBtn" style="display:none;">Generate your link</button>
-
-    <!-- Output -->
-    <h3>Generated Link:</h3>
-    <p id="generatedLink"></p>
-    <!-- Copy Button -->
-    <button id="copyButton" style="display:none;">Copy Link</button>
-  </div>
-
-  <script>
-    // Table Data
-    const tableData = {
-      url: {
-        PMIMA: {
-          CRM: { utm_source: "crm", utm_campaign: "" },
-          "CRM-AOKI": { utm_source: "crm", utm_campaign: "aoki" },
-          SMM: { utm_source: "social", utm_campaign: "" },
-          "SMM-AOKI": { utm_source: "social", utm_campaign: "aoki" },
-          SMMBIO: { utm_source: "social", utm_campaign: "" },
-          SMMHIGH: { utm_source: "social", utm_campaign: "" },
-          WEB: { utm_source: "web", utm_campaign: "" },
-          "WEB-AOKI": { utm_source: "web", utm_campaign: "aoki" },
-        },
-        MUNCHY: {
-          COIN: { utm_source: "munchy", utm_campaign: "coin_mechanic" },
-        },
-        GLOVO: {
-          COIN: { utm_source: "glovo", utm_campaign: "coin_mechanic" },
-        },
-        cpl_agency4: {
-          SHOP: { utm_source: "shop", utm_campaign: "avito" },
-          CRM: { utm_source: "crm", utm_campaign: "avito" },
-          ADS_IAB: { utm_source: "ads_iab", utm_campaign: "avito" },          
-          TOUCHINGPOINT: { utm_source: "touchingpoint", utm_campaign: "avito" },
-        },
-      },
-      schedule: {
-        PMIMA: {
-          CSC: {},
-          MGM: {},
-          DCE2: {},
-        },
-        GLOVO: {
-          ORGANIC: {},
-        },
-        cpl_agency2: {
-          SCHEDULE: {},
-          GLOVO: {},
-        },
-        cpl_agency4: {
-          SCHEDULE: {},    
-          GLOVO: {},
-          SHOP_WSP: {},
-          SHOP_CALL: {},
-        },
-      },
-    };
-
-    const baseUrls = {
-      url: "https://iqostest.com",
-      schedule: "https://iqostest.com/schedule",
-    };
-
-    // DOM Elements
-    const purposeSelect = document.getElementById("purpose");
-    const agencySelect = document.getElementById("agency");
-    const leadSourceSelect = document.getElementById("leadSource");
-    const testCheckbox = document.getElementById("testCheckbox");
-    const testCheckboxContainer = document.getElementById("testCheckboxContainer");
-    const generateBtn = document.getElementById("generateBtn");
-    const generatedLink = document.getElementById("generatedLink");
-    const copyButton = document.getElementById("copyButton");
-
-    // Update Agency List
-    purposeSelect.addEventListener("change", () => {
-      const purpose = purposeSelect.value;
-      agencySelect.style.display = purpose ? "block" : "none";
-      agencySelect.innerHTML = '<option value="">--Select Agency--</option>';
-
-      if (purpose) {
-        const agencies = Object.keys(tableData[purpose]);
-        agencies.forEach(agency => {
-          const option = document.createElement("option");
-          option.value = agency;
-          option.textContent = agency;
-          agencySelect.appendChild(option);
-        });
-      }
-
-      leadSourceSelect.style.display = "none";
-      testCheckboxContainer.style.display = "none";
-      generateBtn.style.display = "none";
-      generatedLink.textContent = "";
-      copyButton.style.display = "none";
-    });
-
-    // Update Lead Source List
-    agencySelect.addEventListener("change", () => {
-      const purpose = purposeSelect.value;
-      const agency = agencySelect.value;
-      leadSourceSelect.style.display = agency ? "block" : "none";
-      leadSourceSelect.innerHTML = '<option value="">--Select Lead Source--</option>';
-
-      if (agency) {
-        const leadSources = Object.keys(tableData[purpose][agency]);
-        leadSources.forEach(source => {
-          const option = document.createElement("option");
-          option.value = source;
-          option.textContent = source;
-          leadSourceSelect.appendChild(option);
-        });
-      }
-
-      testCheckboxContainer.style.display = "none";
-      generateBtn.style.display = "none";
-      generatedLink.textContent = "";
-      copyButton.style.display = "none";
-    });
-
-    // Show Test Checkbox and Generate Button
-    leadSourceSelect.addEventListener("change", () => {
-      const leadSource = leadSourceSelect.value;
-      if (leadSource) {
-        testCheckboxContainer.style.display = "block";
-        generateBtn.style.display = "block";
-      } else {
-        testCheckboxContainer.style.display = "none";
-        generateBtn.style.display = "none";
-      }
-    });
-
-    // Generate URL
-    generateBtn.addEventListener("click", () => {
-      const purpose = purposeSelect.value;
-      const agency = agencySelect.value;
-      const leadSource = leadSourceSelect.value;
-      const isTest = testCheckbox.checked;
-
-      const baseUrl = baseUrls[purpose];
-      const utmParams = tableData[purpose][agency][leadSource];
-      const utmSource = utmParams.utm_source;
-      const utmCampaign = utmParams.utm_campaign;
-
-      let url = `${baseUrl}/${purpose.toLowerCase()}/${agency.toLowerCase()}/${leadSource.toLowerCase()}`;
-      if (isTest) {
-        url += "?test=true";
-      }
-
-      generatedLink.textContent = url;
-      copyButton.style.display = "block";
-    });
-
-    // Copy URL to Clipboard
-    copyButton.addEventListener("click", () => {
-      const text = generatedLink.textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Link copied to clipboard!");
-      });
-    });
-  </script>
 </body>
 </html>
