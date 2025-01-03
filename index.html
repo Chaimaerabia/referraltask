@@ -75,10 +75,17 @@
         .contact-buttons button {
             width: 48%;
             padding: 10px;
-            border: none;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        .contact-buttons button#call-lead-btn {
+            background-color: #28a745;
+        }
+        .contact-buttons button#text-lead-btn {
+            background-color: #ffc107;
         }
         .action-btns {
             display: flex;
@@ -90,14 +97,6 @@
             padding: 10px;
             font-size: 16px;
             border-radius: 5px;
-        }
-        .action-btns button.copy {
-            background-color: #007bff;
-            color: white;
-        }
-        .action-btns button.share {
-            background-color: #28a745;
-            color: white;
         }
         .mobile-icons {
             display: flex;
@@ -114,9 +113,6 @@
             background-color: #ddd;
             border-radius: 50%;
             cursor: pointer;
-        }
-        .mobile-icons button i {
-            color: white;
         }
         .link-container {
             display: flex;
@@ -139,16 +135,25 @@
 <div class="container">
     <h2>Lead Information</h2>
 
+    <!-- Name Section -->
     <div class="field">
         <label>Name</label>
         <input type="text" value="Yassine" disabled>
     </div>
+
+    <!-- Contact Buttons Section Below Name -->
+    <div class="contact-buttons">
+        <button id="call-lead-btn">Call</button>
+        <button id="text-lead-btn">Text</button>
+    </div>
+
+    <!-- City Section -->
     <div class="field">
         <label>City</label>
         <input type="text" value="Agadir" disabled>
     </div>
 
-    <!-- Appointment field, moved after City -->
+    <!-- Appointment field -->
     <div class="field">
         <label>Appointment</label>
         <input type="text" id="appointment" readonly placeholder="Choose Date & Time" />
@@ -251,19 +256,29 @@
             navigator.share({
                 title: 'Lead Information',
                 text: text,
-                url: generatedLinkInput.value,
-            }).catch(error => console.log('Error sharing', error));
+                url: generatedLinkInput.value
+            });
         } else {
-            alert('Share functionality not available in this browser');
+            alert("Sharing not supported on this browser.");
         }
     });
 
-    // Calendar setup for Appointment field with 30 min delay
+    // Datepicker for appointment field
     flatpickr("#appointment", {
         enableTime: true,
-        minDate: new Date().fp_incr(30), // Start from the next 30 minutes
-        dateFormat: "d-m-Y H:i",
+        dateFormat: "Y-m-d H:i",
+        minDate: "today",
     });
+
+    // Adding Call and Text Functionality
+    document.getElementById("call-lead-btn").addEventListener("click", function() {
+        window.location.href = "tel:1234567890"; // Replace with actual phone number
+    });
+
+    document.getElementById("text-lead-btn").addEventListener("click", function() {
+        window.location.href = "sms:1234567890"; // Replace with actual phone number
+    });
+
 </script>
 
 </body>
