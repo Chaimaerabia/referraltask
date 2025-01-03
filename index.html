@@ -216,20 +216,18 @@
     // Initially hide the "Generate Link" button
     generateLinkField.classList.add("hidden");
 
-    // When "Essai guidé effectué" or "Acheté" is selected, show the Generate Link button
-    statusDropdown.addEventListener("change", () => {
-        if (statusDropdown.value === "Essai guidé effectué" || statusDropdown.value === "Acheté") {
-            generateLinkButton.disabled = false;
-        } else {
-            generateLinkButton.disabled = true;
-        }
-    });
-
-    // When the "Save Status" button is clicked, show the Generate Link button
+    // When the "Save Status" button is clicked, check the status and show the Generate Link button if the conditions are met
     saveStatusButton.addEventListener("click", () => {
-        generateLinkField.classList.remove("hidden");
-        saveStatusButton.disabled = true; // Disable Save Status button after saving
-        statusDropdown.disabled = true; // Disable dropdown to prevent further changes
+        const selectedStatus = statusDropdown.value;
+        
+        // Check if the selected status is "Acheté" or "Essai guidé effectué"
+        if (selectedStatus === "Acheté" || selectedStatus === "Essai guidé effectué") {
+            generateLinkField.classList.remove("hidden"); // Show the Generate Link field
+            generateLinkButton.disabled = false; // Enable the Generate Link button
+        } else {
+            generateLinkField.classList.add("hidden"); // Hide if the status doesn't match
+            generateLinkButton.disabled = true; // Disable Generate Link button if the status is not Acheté or Essai guidé effectué
+        }
     });
 
     // Generate the link
