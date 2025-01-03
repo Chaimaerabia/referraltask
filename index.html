@@ -200,6 +200,8 @@
     // Initially hide the "Save Status" and "Generate Link" buttons
     saveStatusField.classList.add("hidden");
     generateLinkField.classList.add("hidden");
+    actionButtons.classList.add("hidden"); // Hide the action buttons initially
+    mobileIcons.classList.add("hidden");
 
     // When "Essai guidé effectué" is selected, show the Save Status button
     statusDropdown.addEventListener("change", () => {
@@ -228,7 +230,7 @@
         const fullLink = `${baseLink}&source=${phoneNumber}`;
         generatedLinkInput.value = fullLink;
 
-        // Show action buttons after generating the link
+        // Show action buttons (Copy & Share) after generating the link
         actionButtons.classList.remove("hidden");
         mobileIcons.classList.remove("hidden");
     });
