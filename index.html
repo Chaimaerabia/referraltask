@@ -161,6 +161,7 @@
         <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
     </div>
 
+    <!-- Save Status button -->
     <div class="field hidden" id="save-status-field">
         <button id="save-status-btn">Save Status</button>
     </div>
@@ -194,17 +195,18 @@
     const generatedLinkInput = document.getElementById("generated-link");
     const actionButtons = document.getElementById("action-buttons");
     const mobileIcons = document.getElementById("mobile-icons");
+    const saveStatusField = document.getElementById("save-status-field");
 
     // Initially hide the "Save Status" and "Generate Link" buttons
-    saveStatusButton.classList.add("hidden");
+    saveStatusField.classList.add("hidden");
     generateLinkField.classList.add("hidden");
 
     // When "Essai guidé effectué" is selected, show the Save Status button
     statusDropdown.addEventListener("change", () => {
         if (statusDropdown.value === "Essai guidé effectué") {
-            saveStatusButton.classList.remove("hidden");
+            saveStatusField.classList.remove("hidden");
         } else {
-            saveStatusButton.classList.add("hidden");
+            saveStatusField.classList.add("hidden");
             generateLinkField.classList.add("hidden");
             actionButtons.classList.add("hidden");
             mobileIcons.classList.add("hidden");
