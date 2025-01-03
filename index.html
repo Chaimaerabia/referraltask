@@ -79,6 +79,20 @@
         padding: 8px;
         border-radius: 5px;
     }
+    /* Mobile-friendly styles */
+    @media (max-width: 600px) {
+        .container {
+            padding: 15px;
+        }
+        .contact-buttons button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .generate-link-section button,
+        .generate-link-section input {
+            width: 100%;
+        }
+    }
 </style>
 </head>
 <body>
@@ -95,7 +109,7 @@
         <input type="text" value="Agadir" disabled>
     </div>
 
-    <!-- Status Section -->
+    <!-- Status Section (Emphasized) -->
     <div class="status-section">
         <label>Status</label>
         <select id="status-dropdown">
@@ -122,13 +136,13 @@
         <button id="copy-link-btn">Copy Link</button>
     </div>
 
-    <!-- Contact Buttons -->
+    <!-- Contact Buttons (Hidden by Default) -->
     <div class="contact-buttons hidden" id="contact-buttons">
         <button class="call">Appeler</button>
         <button class="share">Envoyer</button>
     </div>
 
-    <!-- Action Section -->
+    <!-- Action Section (Contact Button) -->
     <button id="contact-btn">Contact</button>
 </div>
 
@@ -142,7 +156,7 @@ const copyLinkButton = document.getElementById("copy-link-btn");
 const contactButtons = document.getElementById("contact-buttons");
 const contactButton = document.getElementById("contact-btn");
 
-// Show/Hide generate link and contact buttons
+// Show/Hide generate link and contact buttons based on status
 statusDropdown.addEventListener("change", () => {
     if (statusDropdown.value === "Essai guidé effectué") {
         generateLinkField.classList.remove("hidden");
