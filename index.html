@@ -10,58 +10,40 @@
 
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7fa;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
         }
-
         .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #333;
-            font-size: 28px;
-            font-weight: 600;
         }
-
         .field {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-
         .field label {
-            font-size: 16px;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 8px;
             display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
-
-        .field input,
-        .field textarea,
-        .field select {
+        .field input, .field select, .field button, .field textarea {
             width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            border-radius: 8px;
+            padding: 10px;
+            margin-top: 5px;
             border: 1px solid #ddd;
-            font-size: 14px;
-            color: #444;
-            background-color: #fafafa;
+            border-radius: 5px;
         }
-
-        .field input:disabled {
-            background-color: #f0f0f0;
+        .field textarea {
+            height: 80px;
         }
-
         .status-container {
             display: flex;
             justify-content: space-between;
@@ -71,75 +53,98 @@
             border-radius: 10px;
             font-size: 18px;
             font-weight: bold;
-            color: #f9f9f9;
+            color: #f9f9f9; /* Soft white */
         }
-
         .status-container select {
             width: 70%;
             padding: 8px;
             font-size: 16px;
             border-radius: 5px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            color: #333;
         }
-
         .status-container option {
             font-size: 16px;
         }
-
+        .hidden {
+            display: none;
+        }
         .contact-buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            padding: 10px;
         }
-
         .contact-buttons button {
-            width: 48%;
-            padding: 14px;
+            padding: 12px 20px;
+            border-radius: 8px;
             font-size: 16px;
-            border-radius: 50px;
+            font-weight: 600;
+            color: white;
             border: none;
             cursor: pointer;
-            color: white;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            width: 48%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-        .contact-buttons button#call-lead-btn {
-            background-color: #28a745;
+        .contact-buttons .call-btn {
+            background-color: #007bff; /* Call button in Blue */
         }
-
-        .contact-buttons button#text-lead-btn {
-            background-color: #ffc107;
+        .contact-buttons .text-btn {
+            background-color: #28a745; /* Text button in Green */
         }
-
+        .contact-buttons button i {
+            margin-right: 8px; /* Adds space between the icon and the text */
+        }
         .contact-buttons button:hover {
-            background-color: #333;
+            opacity: 0.85; /* Slight hover effect */
+            transform: scale(1.05); /* Slight zoom effect */
         }
-
+        .contact-buttons button:active {
+            transform: scale(1); /* Prevents zooming when clicked */
+        }
+        .contact-buttons button:disabled {
+            background-color: #dcdcdc; /* Disabled button color */
+            cursor: not-allowed;
+        }
+        .link-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .link-container button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        #generated-link {
+            width: calc(100% - 60px); /* Make the input field bigger */
+            padding: 15px;
+        }
         .action-btns {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
-
         .action-btns button {
             width: 48%;
-            padding: 14px;
+            padding: 10px;
             font-size: 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            border: none;
+            border-radius: 5px;
+        }
+        .action-btns button.copy {
             background-color: #007bff;
             color: white;
         }
-
+        .action-btns button.share {
+            background-color: #28a745;
+            color: white;
+        }
         .mobile-icons {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
-
         .mobile-icons button {
             width: 40px;
             height: 40px;
@@ -147,39 +152,13 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            background-color: #007bff;
+            background-color: #ddd;
             border-radius: 50%;
+            cursor: pointer;
+        }
+        .mobile-icons button i {
             color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
-
-        .mobile-icons button:hover {
-            background-color: #333;
-        }
-
-        .link-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .link-container button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-        }
-
-        #generated-link {
-            width: calc(100% - 60px);
-            padding: 15px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            color: #333;
-            background-color: #fafafa;
-        }
-
     </style>
 </head>
 <body>
@@ -187,29 +166,16 @@
 <div class="container">
     <h2>Lead Information</h2>
 
-    <!-- Name Section -->
     <div class="field">
         <label>Name</label>
         <input type="text" value="Yassine" disabled>
     </div>
-
-    <!-- Contact Buttons Section Below Name -->
-    <div class="contact-buttons">
-        <button id="call-lead-btn">
-            <i class="fas fa-phone-alt"></i> Call
-        </button>
-        <button id="text-lead-btn">
-            <i class="fas fa-sms"></i> Text
-        </button>
-    </div>
-
-    <!-- City Section -->
     <div class="field">
         <label>City</label>
         <input type="text" value="Agadir" disabled>
     </div>
 
-    <!-- Appointment field -->
+    <!-- Appointment field, moved after City -->
     <div class="field">
         <label>Appointment</label>
         <input type="text" id="appointment" readonly placeholder="Choose Date & Time" />
@@ -244,6 +210,16 @@
             <button id="copy-link-btn" class="copy hidden"><i class="fas fa-copy"></i></button>
             <button id="share-link-btn" class="share hidden"><i class="fas fa-share-alt"></i></button>
         </div>
+    </div>
+
+    <!-- Contact Buttons Section (Call and Text) -->
+    <div class="contact-buttons">
+        <button class="call-btn" id="call-btn">
+            <i class="fas fa-phone-alt"></i> Call
+        </button>
+        <button class="text-btn" id="text-btn">
+            <i class="fas fa-comment-alt"></i> Text
+        </button>
     </div>
 
 </div>
@@ -288,53 +264,29 @@
 
     // Generate the link
     generateLinkButton.addEventListener("click", () => {
-        const baseLink = "https://iqostest.com/?agence=PMIMA";
-        const phoneNumber = "1234567890"; // Fake phone number for simulation
-        const fullLink = `${baseLink}&source=${phoneNumber}`;
-        generatedLinkInput.value = fullLink;
-
-        // Show Copy & Share buttons
+        const link = `https://example.com/lead?name=Yassine&status=${statusDropdown.value}&appointment=${appointmentInput.value}`;
+        generatedLinkInput.value = link;
         copyLinkButton.classList.remove("hidden");
         shareLinkButton.classList.remove("hidden");
     });
 
-    // Copy the generated link to clipboard
+    // Copy the generated link to the clipboard
     copyLinkButton.addEventListener("click", () => {
         generatedLinkInput.select();
         document.execCommand("copy");
         alert("Link copied to clipboard!");
     });
 
-    // Share the generated link
+    // Share the generated link (example action)
     shareLinkButton.addEventListener("click", () => {
-        const text = `Check out this link: ${generatedLinkInput.value}`;
-        if (navigator.share) {
-            navigator.share({
-                title: 'Lead Information',
-                text: text,
-                url: generatedLinkInput.value
-            });
-        } else {
-            alert("Sharing not supported on this browser.");
-        }
+        alert("Link shared!");
     });
 
-    // Datepicker for appointment field
+    // Initialize flatpickr for appointment field
     flatpickr("#appointment", {
         enableTime: true,
         dateFormat: "Y-m-d H:i",
-        minDate: "today",
     });
-
-    // Adding Call and Text Functionality
-    document.getElementById("call-lead-btn").addEventListener("click", function() {
-        window.location.href = "tel:1234567890"; // Replace with actual phone number
-    });
-
-    document.getElementById("text-lead-btn").addEventListener("click", function() {
-        window.location.href = "sms:1234567890"; // Replace with actual phone number
-    });
-
 </script>
 
 </body>
