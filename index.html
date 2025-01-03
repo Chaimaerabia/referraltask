@@ -132,6 +132,15 @@
             width: calc(100% - 60px); /* Make the input field bigger */
             padding: 15px;
         }
+        .status-saved {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -180,6 +189,9 @@
         <button id="save-status-btn">Save Status</button>
     </div>
 
+    <!-- Confirmation message when status is saved -->
+    <div id="status-saved-message" class="status-saved hidden">Status Saved!</div>
+
     <!-- Generate Link button, initially hidden -->
     <div class="field hidden" id="generate-link-field">
         <button id="generate-link-btn" disabled>Generate Link</button>
@@ -209,17 +221,25 @@
     const generatedLinkInput = document.getElementById("generated-link");
     const copyLinkButton = document.getElementById("copy-link-btn");
     const shareLinkButton = document.getElementById("share-link-btn");
+    const statusSavedMessage = document.getElementById("status-saved-message");
 
     // Appointment field
     const appointmentInput = document.getElementById("appointment");
 
-    // Initially hide the "Generate Link" button
+    // Initially hide the "Generate Link" button and status saved message
     generateLinkField.classList.add("hidden");
+    statusSavedMessage.classList.add("hidden");
 
     // When the "Save Status" button is clicked, check the status and show the Generate Link button if the conditions are met
     saveStatusButton.addEventListener("click", () => {
         const selectedStatus = statusDropdown.value;
         
+        // Disable the dropdown after saving the status
+        statusDropdown.disabled = true;
+        
+        // Show status saved confirmation message
+        statusSavedMessage.classList.remove("hidden");
+
         // Check if the selected status is "Acheté" or "Essai guidé effectué"
         if (selectedStatus === "Acheté" || selectedStatus === "Essai guidé effectué") {
             generateLinkField.classList.remove("hidden"); // Show the Generate Link field
