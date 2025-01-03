@@ -265,7 +265,8 @@
         shareLinkButton.classList.remove("hidden");
 
         // Hide the Text and Call buttons after generating the link
-        document.querySelector('.contact-buttons').classList.add('hidden');
+        document.querySelector('.call-btn').classList.add('hidden');
+        document.querySelector('.text-btn').classList.add('hidden');
     });
 
     // Copy the generated link to clipboard
@@ -289,10 +290,11 @@
         }
     });
 
-    // Calendar setup for Appointment field with 30 min delay
-    flatpickr("#appointment", {
+    // Calendar setup for Appointment input field
+    flatpickr(appointmentInput, {
         enableTime: true,
-        minDate: new Date().fp_incr(30), // 30 minutes from now
+        minDate: "today",
+        defaultDate: new Date().fp_incr(30), // 30 minutes from now
         dateFormat: "Y-m-d H:i",
     });
 </script>
