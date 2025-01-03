@@ -176,7 +176,7 @@
     </div>
 
     <!-- Save Status button -->
-    <div class="field hidden" id="save-status-field">
+    <div class="field">
         <button id="save-status-btn">Save Status</button>
     </div>
 
@@ -209,31 +209,26 @@
     const generatedLinkInput = document.getElementById("generated-link");
     const copyLinkButton = document.getElementById("copy-link-btn");
     const shareLinkButton = document.getElementById("share-link-btn");
-    const saveStatusField = document.getElementById("save-status-field");
 
     // Appointment field
     const appointmentInput = document.getElementById("appointment");
 
-    // Initially hide the "Save Status" and "Generate Link" buttons
-    saveStatusField.classList.add("hidden");
+    // Initially hide the "Generate Link" button
     generateLinkField.classList.add("hidden");
 
-    // When "Essai guidé effectué" or "Acheté" is selected, show the Save Status button and enable Generate Link button
+    // When "Essai guidé effectué" or "Acheté" is selected, show the Generate Link button
     statusDropdown.addEventListener("change", () => {
         if (statusDropdown.value === "Essai guidé effectué" || statusDropdown.value === "Acheté") {
-            saveStatusField.classList.remove("hidden");
-            generateLinkField.classList.remove("hidden");
             generateLinkButton.disabled = false;
         } else {
-            saveStatusField.classList.remove("hidden");
-            generateLinkField.classList.add("hidden");
             generateLinkButton.disabled = true;
         }
     });
 
-    // When the "Save Status" button is clicked, enable the Generate Link button
+    // When the "Save Status" button is clicked, show the Generate Link button
     saveStatusButton.addEventListener("click", () => {
-        saveStatusButton.disabled = true;
+        generateLinkField.classList.remove("hidden");
+        saveStatusButton.disabled = true; // Disable Save Status button after saving
         statusDropdown.disabled = true; // Disable dropdown to prevent further changes
     });
 
