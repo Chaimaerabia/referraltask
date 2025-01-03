@@ -6,7 +6,7 @@
     <title>Lead Information</title>
     <!-- FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -41,16 +41,19 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .field textarea {
+            height: 80px;
+        }
         .status-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #00D1D2; /* Turquoise */
+            background-color: #00d1d2; /* Turquoise */
             padding: 15px;
             border-radius: 10px;
             font-size: 18px;
             font-weight: bold;
-            color: #fff; /* Soft white text */
+            color: #f9f9f9; /* Soft white */
         }
         .status-container select {
             width: 70%;
@@ -76,19 +79,6 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-        }
-        .contact-buttons button.call, .contact-buttons button.share {
-            width: 30%;
-            padding: 10px;
-            font-size: 18px;
-        }
-        .contact-buttons button.call {
-            background-color: #007bff;
-            color: white;
-        }
-        .contact-buttons button.share {
-            background-color: #28a745;
-            color: white;
         }
         .action-btns {
             display: flex;
@@ -128,16 +118,19 @@
         .mobile-icons button i {
             color: white;
         }
-        .appointment-field {
-            width: calc(100% - 50px);
-            display: inline-block;
+        .link-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .appointment-btn {
-            width: 40px;
-            display: inline-block;
-            text-align: center;
+        .link-container button {
+            background-color: transparent;
+            border: none;
             cursor: pointer;
-            margin-top: 10px;
+        }
+        #generated-link {
+            width: calc(100% - 60px); /* Make the input field bigger */
+            padding: 15px;
         }
     </style>
 </head>
@@ -145,7 +138,7 @@
 
 <div class="container">
     <h2>Lead Information</h2>
-    
+
     <div class="field">
         <label>Name</label>
         <input type="text" value="Yassine" disabled>
@@ -154,13 +147,14 @@
         <label>City</label>
         <input type="text" value="Agadir" disabled>
     </div>
-    
-    <!-- Appointment field after city -->
+
+    <!-- Appointment field, moved after City -->
     <div class="field">
         <label>Appointment</label>
-        <input type="text" id="appointment" class="appointment-field" placeholder="Select Appointment Time">
+        <input type="text" id="appointment" readonly placeholder="Choose Date & Time" />
     </div>
-    
+
+    <!-- Comments field -->
     <div class="field">
         <label>Comments</label>
         <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
@@ -176,6 +170,7 @@
         </select>
     </div>
 
+    <!-- Save Status button -->
     <div class="field hidden" id="save-status-field">
         <button id="save-status-btn">Save Status</button>
     </div>
@@ -183,17 +178,16 @@
     <!-- Generate Link button, initially hidden -->
     <div class="field hidden" id="generate-link-field">
         <button id="generate-link-btn" disabled>Generate Link</button>
-        <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
-        <!-- Copy and Share icons next to the generated link -->
-        <div class="action-btns hidden" id="action-buttons">
-            <button id="copy-link-btn" class="copy"><i class="fas fa-copy"></i></button>
-            <button id="share-link-btn" class="share"><i class="fas fa-share-alt"></i></button>
+        <div class="link-container">
+            <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
+            <button id="copy-link-btn" class="copy hidden"><i class="fas fa-copy"></i></button>
+            <button id="share-link-btn" class="share hidden"><i class="fas fa-share-alt"></i></button>
         </div>
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 
 <script>
     // Accessing elements
@@ -202,8 +196,12 @@
     const generateLinkButton = document.getElementById("generate-link-btn");
     const generateLinkField = document.getElementById("generate-link-field");
     const generatedLinkInput = document.getElementById("generated-link");
-    const actionButtons = document.getElementById("action-buttons");
+    const copyLinkButton = document.getElementById("copy-link-btn");
+    const shareLinkButton = document.getElementById("share-link-btn");
     const saveStatusField = document.getElementById("save-status-field");
+
+    // Appointment field
+    const appointmentInput = document.getElementById("appointment");
 
     // Initially hide the "Save Status" and "Generate Link" buttons
     saveStatusField.classList.add("hidden");
@@ -216,7 +214,6 @@
         } else {
             saveStatusField.classList.add("hidden");
             generateLinkField.classList.add("hidden");
-            actionButtons.classList.add("hidden");
         }
     });
 
@@ -235,19 +232,20 @@
         const fullLink = `${baseLink}&source=${phoneNumber}`;
         generatedLinkInput.value = fullLink;
 
-        // Show action buttons after generating the link
-        actionButtons.classList.remove("hidden");
+        // Show Copy & Share buttons
+        copyLinkButton.classList.remove("hidden");
+        shareLinkButton.classList.remove("hidden");
     });
 
     // Copy the generated link to clipboard
-    document.getElementById("copy-link-btn").addEventListener("click", () => {
+    copyLinkButton.addEventListener("click", () => {
         generatedLinkInput.select();
         document.execCommand("copy");
         alert("Link copied to clipboard!");
     });
 
     // Share the generated link
-    document.getElementById("share-link-btn").addEventListener("click", () => {
+    shareLinkButton.addEventListener("click", () => {
         const text = `Check out this link: ${generatedLinkInput.value}`;
         if (navigator.share) {
             navigator.share({
@@ -260,12 +258,11 @@
         }
     });
 
-    // Initialize the date picker with 30-minute increment
+    // Calendar setup for Appointment field with 30 min delay
     flatpickr("#appointment", {
         enableTime: true,
-        minDate: new Date().fp_incr(30), // Ensures it starts from the next 30 minutes
-        dateFormat: "d-m-Y H:i", // Format to display date and time
-        defaultDate: new Date(), // Ensures the calendar opens at today's date and time
+        minDate: new Date().fp_incr(30), // Start from the next 30 minutes
+        dateFormat: "d-m-Y H:i",
     });
 </script>
 
