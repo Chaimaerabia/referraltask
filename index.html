@@ -1,109 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Simulation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .form-container {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .form-group select {
-            appearance: none;
-            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23999" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>') no-repeat right 10px center;
-            background-size: 12px 12px;
-        }
-
-        .form-actions {
-            text-align: right;
-        }
-
-        .form-actions button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #28a745;
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .form-actions button:hover {
-            background-color: #218838;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Update Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    select, input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="form-container">
-        <form>
-            <div class="form-group">
-                <label for="field1">Field 1</label>
-                <input type="text" id="field1" placeholder="Enter value">
-            </div>
-
-            <div class="form-group">
-                <label for="dropdown1">Dropdown 1</label>
-                <select id="dropdown1">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="field2">Field 2</label>
-                <input type="text" id="field2" placeholder="Enter value">
-            </div>
-
-            <div class="form-group">
-                <label for="dropdown2">Dropdown 2</label>
-                <select id="dropdown2">
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                </select>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+  <form id="statusForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="Yassine" readonly>
     </div>
+
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" value="Agadir" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="nouveau">Nouveau</option>
+        <option value="rdv_confirmé">RDV confirmé</option>
+        <option value="essai_guidé_effectué">Essai guidé effectué</option>
+        <option value="autres">Autres</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="appointment">Appointment:</label>
+      <input type="datetime-local" id="appointment" name="appointment">
+    </div>
+
+    <div class="form-group">
+      <label for="comment">Comment:</label>
+      <textarea id="comment" name="comment" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="button" id="contactButton">Contact</button>
+      <div id="contactOptions" class="hidden">
+        <button type="button">Appeler</button>
+        <button type="button">Envoyer</button>
+      </div>
+    </div>
+
+    <div class="form-group hidden" id="linkContainer">
+      <button type="button" id="generateLinkButton">Generate Link</button>
+      <input type="text" id="generatedLink" readonly>
+      <button type="button" id="copyLinkButton">Copy Link</button>
+      <button type="button" id="shareLinkButton">Share Link</button>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('status').addEventListener('change', function () {
+      const selectedStatus = this.value;
+      const linkContainer = document.getElementById('linkContainer');
+      if (selectedStatus === 'essai_guidé_effectué') {
+        linkContainer.classList.remove('hidden');
+      } else {
+        linkContainer.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('contactButton').addEventListener('click', function () {
+      const contactOptions = document.getElementById('contactOptions');
+      contactOptions.classList.toggle('hidden');
+    });
+
+    document.getElementById('generateLinkButton').addEventListener('click', function () {
+      const link = 'https://iqostest.com/?agence=PMIMA&source=0626063022';
+      const linkInput = document.getElementById('generatedLink');
+      linkInput.value = link;
+      alert('Link generated: ' + link);
+    });
+
+    document.getElementById('copyLinkButton').addEventListener('click', function () {
+      const linkInput = document.getElementById('generatedLink');
+      linkInput.select();
+      document.execCommand('copy');
+      alert('Link copied to clipboard!');
+    });
+
+    document.getElementById('shareLinkButton').addEventListener('click', function () {
+      const link = document.getElementById('generatedLink').value;
+      if (navigator.share) {
+        navigator.share({
+          title: 'Generated Link',
+          text: 'Here is the link:',
+          url: link
+        }).then(() => {
+          alert('Link shared successfully!');
+        }).catch(err => {
+          console.error('Error sharing:', err);
+        });
+      } else {
+        alert('Sharing is not supported in this browser.');
+      }
+    });
+  </script>
 </body>
 </html>
