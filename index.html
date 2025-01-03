@@ -10,40 +10,58 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
         }
+
         .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
         }
+
         .field {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
+
         .field label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
             display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
         }
-        .field input, .field select, .field button, .field textarea {
+
+        .field input,
+        .field textarea,
+        .field select {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            font-size: 14px;
+            color: #444;
+            background-color: #fafafa;
         }
-        .field textarea {
-            height: 80px;
+
+        .field input:disabled {
+            background-color: #f0f0f0;
         }
+
         .status-container {
             display: flex;
             justify-content: space-between;
@@ -53,56 +71,75 @@
             border-radius: 10px;
             font-size: 18px;
             font-weight: bold;
-            color: #f9f9f9; /* Soft white */
+            color: #f9f9f9;
         }
+
         .status-container select {
             width: 70%;
             padding: 8px;
             font-size: 16px;
             border-radius: 5px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #333;
         }
+
         .status-container option {
             font-size: 16px;
         }
-        .hidden {
-            display: none;
-        }
+
         .contact-buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
+
         .contact-buttons button {
             width: 48%;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 14px;
             font-size: 16px;
+            border-radius: 50px;
+            border: none;
             cursor: pointer;
-            background-color: #007bff;
             color: white;
+            transition: background-color 0.3s ease;
         }
+
         .contact-buttons button#call-lead-btn {
             background-color: #28a745;
         }
+
         .contact-buttons button#text-lead-btn {
             background-color: #ffc107;
         }
+
+        .contact-buttons button:hover {
+            background-color: #333;
+        }
+
         .action-btns {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
+
         .action-btns button {
             width: 48%;
-            padding: 10px;
+            padding: 14px;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
         }
+
         .mobile-icons {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
+
         .mobile-icons button {
             width: 40px;
             height: 40px;
@@ -110,24 +147,39 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            background-color: #ddd;
+            background-color: #007bff;
             border-radius: 50%;
+            color: white;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
+        .mobile-icons button:hover {
+            background-color: #333;
+        }
+
         .link-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
         .link-container button {
             background-color: transparent;
             border: none;
             cursor: pointer;
         }
+
         #generated-link {
-            width: calc(100% - 60px); /* Make the input field bigger */
+            width: calc(100% - 60px);
             padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            color: #333;
+            background-color: #fafafa;
         }
+
     </style>
 </head>
 <body>
@@ -143,8 +195,12 @@
 
     <!-- Contact Buttons Section Below Name -->
     <div class="contact-buttons">
-        <button id="call-lead-btn">Call</button>
-        <button id="text-lead-btn">Text</button>
+        <button id="call-lead-btn">
+            <i class="fas fa-phone-alt"></i> Call
+        </button>
+        <button id="text-lead-btn">
+            <i class="fas fa-sms"></i> Text
+        </button>
     </div>
 
     <!-- City Section -->
