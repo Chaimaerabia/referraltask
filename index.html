@@ -18,6 +18,10 @@
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
     .field {
         margin-bottom: 15px;
     }
@@ -57,49 +61,20 @@
         background-color: #e0e0e0;
         color: black;
     }
-    .status-section {
-        background-color: #e7f3ff;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #007bff;
-        margin-bottom: 20px;
+    .status-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-    .generate-link-section {
-        margin-top: 15px;
-    }
-    .generate-link-section button {
-        width: auto;
-        background-color: #4CAF50;
-        color: white;
-        padding: 8px 16px;
-        margin-right: 10px;
-    }
-    .generate-link-section input {
-        width: auto;
-        padding: 8px;
-        border-radius: 5px;
-    }
-    /* Mobile-friendly styles */
-    @media (max-width: 600px) {
-        .container {
-            padding: 15px;
-        }
-        .contact-buttons button {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .generate-link-section button,
-        .generate-link-section input {
-            width: 100%;
-        }
+    .status-container select {
+        width: 70%;
     }
 </style>
 </head>
 <body>
+
 <div class="container">
     <h2>Lead Information</h2>
-
-    <!-- Static Fields -->
     <div class="field">
         <label>Name</label>
         <input type="text" value="Yassine" disabled>
@@ -108,9 +83,9 @@
         <label>City</label>
         <input type="text" value="Agadir" disabled>
     </div>
-
-    <!-- Status Section (Emphasized) -->
-    <div class="status-section">
+    
+    <!-- Status field with emphasis -->
+    <div class="field status-container">
         <label>Status</label>
         <select id="status-dropdown">
             <option value="Pending">Pending</option>
@@ -119,71 +94,70 @@
         </select>
     </div>
 
-    <!-- Appointment and Comments -->
     <div class="field">
         <label>Appointment</label>
-        <input type="text" value="28/12/2024 at 15:10" disabled>
+        <input type="text" value="28/12/2024 at 15:10" id="appointment" />
     </div>
     <div class="field">
         <label>Comments</label>
-        <textarea rows="3" disabled>Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
+        <textarea rows="3" id="comments">Agadir, quartier Adrar, à côté de Dubai Factory</textarea>
     </div>
 
-    <!-- Generate Link Section -->
-    <div class="generate-link-section hidden" id="generate-link-field">
+    <div class="field hidden" id="generate-link-field">
         <button id="generate-link-btn">Generate Link</button>
-        <input type="text" id="generated-link" readonly>
-        <button id="copy-link-btn">Copy Link</button>
+        <input type="text" id="generated-link" readonly placeholder="Generated link will appear here" />
+        <button id="copy-link-btn" class="hidden">Copy Link</button>
     </div>
 
-    <!-- Contact Buttons (Hidden by Default) -->
+    <!-- Contact buttons appear only after clicking "Contact" -->
+    <button id="contact-btn">Contact</button>
     <div class="contact-buttons hidden" id="contact-buttons">
         <button class="call">Appeler</button>
         <button class="share">Envoyer</button>
     </div>
-
-    <!-- Action Section (Contact Button) -->
-    <button id="contact-btn">Contact</button>
 </div>
 
 <script>
-// Accessing elements
-const statusDropdown = document.getElementById("status-dropdown");
-const generateLinkField = document.getElementById("generate-link-field");
-const generateLinkButton = document.getElementById("generate-link-btn");
-const generatedLinkInput = document.getElementById("generated-link");
-const copyLinkButton = document.getElementById("copy-link-btn");
-const contactButtons = document.getElementById("contact-buttons");
-const contactButton = document.getElementById("contact-btn");
+    // Accessing elements
+    const statusDropdown = document.getElementById("status-dropdown");
+    const generateLinkField = document.getElementById("generate-link-field");
+    const generateLinkButton = document.getElementById("generate-link-btn");
+    const generatedLinkInput = document.getElementById("generated-link");
+    const copyLinkButton = document.getElementById("copy-link-btn");
+    const contactBtn = document.getElementById("contact-btn");
+    const contactButtons = document.getElementById("contact-buttons");
 
-// Show/Hide generate link and contact buttons based on status
-statusDropdown.addEventListener("change", () => {
-    if (statusDropdown.value === "Essai guidé effectué") {
-        generateLinkField.classList.remove("hidden");
-    } else {
-        generateLinkField.classList.add("hidden");
-    }
-});
+    // Show/hide "Contact" buttons
+    contactBtn.addEventListener("click", () => {
+        contactButtons.classList.remove("hidden");
+        contactBtn.classList.add("hidden");
+    });
 
-// Generate link functionality
-generateLinkButton.addEventListener("click", () => {
-    const baseLink = "https://iqostest.com/?agence=PMIMA";
-    const phoneNumber = "1234567890"; // Fake phone number for simulation
-    const fullLink = `${baseLink}&source=${phoneNumber}`;
-    generatedLinkInput.value = fullLink;
-});
+    // Update the status
+    statusDropdown.addEventListener("change", () => {
+        if (statusDropdown.value === "Essai guidé effectué") {
+            generateLinkField.classList.remove("hidden");
+        } else {
+            generateLinkField.classList.add("hidden");
+        }
+    });
 
-// Copy link functionality
-copyLinkButton.addEventListener("click", () => {
-    generatedLinkInput.select();
-    document.execCommand("copy");
-    alert("Link copied to clipboard!");
-});
+    // Generate the link
+    generateLinkButton.addEventListener("click", () => {
+        const baseLink = "https://iqostest.com/?agence=PMIMA";
+        const phoneNumber = "1234567890"; // Fake phone number for simulation
+        const fullLink = `${baseLink}&source=${phoneNumber}`;
+        generatedLinkInput.value = fullLink;
+        copyLinkButton.classList.remove("hidden");
+    });
 
-// Show contact buttons when "Contact" is clicked
-contactButton.addEventListener("click", () => {
-    contactButtons.classList.remove("hidden");
-});
+    // Copy the generated link to clipboard
+    copyLinkButton.addEventListener("click", () => {
+        generatedLinkInput.select();
+        document.execCommand("copy");
+        alert("Link copied to clipboard!");
+    });
 </script>
+
 </body>
 </html>
